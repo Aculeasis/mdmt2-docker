@@ -1,0 +1,41 @@
+FROM arm32v7/ubuntu:bionic
+
+ARG RUNTIME_PACKAGES='alsa-utils curl flac iproute2 locales mpg123 python3 python3-pip python3-setuptools \
+libatlas-base-dev libpython3.6'
+ARG BUILD_PACKAGES='git python3-dev libjack-jackd2-dev portaudio19-dev libxml2-dev libxslt-dev libffi-dev libssl-dev \
+build-essential swig sox'
+ARG REMOVE_ME="dpkg-dev libcc1-0 libdpkg-perl libportaudiocpp0"
+ARG PIP_PACKAGES='pyaudio aftership gTTS pafy urllib3 SpeechRecognition python-mpd2 wikipedia'
+
+RUN apt-get update -y && \
+    apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
+    apt-mark manual $(apt-mark showauto) && \
+    apt-get -y install --no-install-recommends $BUILD_PACKAGES && \
+    pip3 install $PIP_PACKAGES && \
+    cd /usr/share/locale/ && ls | grep -v 'ru\|en\|locale.alias' | xargs rm -rf && \
+    cat /etc/locale.gen | grep '# ru\|# en_US\|FALSE' | sed -e 's/# //g' > /tmp/locale.gen && \
+    mv /tmp/locale.gen /etc/ && locale-gen --purge --no-archive && \
+    git clone https://github.com/Aculeasis/mdmTerminal2.git /opt/term && \
+    cp -R /opt/term/src/ /opt/mdmterminal2/ && \
+    rm /opt/mdmterminal2/lib/_snowboydetect.* && \
+    git clone https://github.com/Kitt-AI/snowboy.git /opt/sb && cd /opt/sb && git checkout 3f5f944 && \
+    cd /opt/sb/swig/Python3 && make && cp /opt/sb/swig/Python3/_snowboydetect.so /opt/mdmterminal2/lib/ && \
+    cd / && rm -rf /opt/term opt/sb && \
+    mkdir /opt/cfg && \
+    apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) $REMOVE_ME && \
+    apt-get autoremove -y && \
+    apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp /usr/share/doc/* /usr/share/info/* /usr/lib/python3.6/test
+
+ENV LC_ALL ru_RU.UTF-8
+ENV LANG ru_RU.UTF-8
+ENV LANGUAGE ru_RU.UTF-8
+
+ADD crutch.py /opt/mdmterminal2/crutch.py
+
+EXPOSE 7999/tcp
+
+VOLUME ["/opt/cfg"]
+
+CMD python3 /opt/mdmterminal2/crutch.py

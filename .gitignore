@@ -1,0 +1,6 @@
+__pycache__
+.idea
+test.py
+dgen.py
+Dockerfile
+Dockerfile_rhvoice
