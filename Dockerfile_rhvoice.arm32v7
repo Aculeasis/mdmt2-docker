@@ -12,9 +12,8 @@ RUN apt-get update -y && \
     apt-mark manual $(apt-mark showauto) && \
     apt-get -y install --no-install-recommends $BUILD_PACKAGES && \
     pip3 install $PIP_PACKAGES && \
-    cd /usr/share/locale/ && ls | grep -v 'ru\|en\|eo\|ka_\|ky\|tt\|uk\|locale.alias' | xargs rm -rf && \
-    cat /etc/locale.gen | grep '# ru\|# en_US\|# eo\|# ka_\|# ky\|# tt\|# uk\|FALSE' | sed -e 's/# //g' > /tmp/locale.gen && \
-    mv /tmp/locale.gen /etc/ && locale-gen --purge --no-archive && \
+    cd /usr/share/locale/ && ls | grep -v 'ru\|en\|locale.alias' | xargs rm -rf && \
+    locale-gen ru_RU.UTF-8 && \
     git clone https://github.com/Aculeasis/mdmTerminal2.git /opt/term && \
     cp -R /opt/term/src/ /opt/mdmterminal2/ && \
     rm /opt/mdmterminal2/lib/_snowboydetect.* && \
