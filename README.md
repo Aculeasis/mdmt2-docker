@@ -49,6 +49,7 @@ mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal
 - Для работы с аудио контейнеру пробрасывается /dev/snd. Вероятно вы не сможете запустить несколько контейнеров\терминалов - snowboy постоянно использует микрофон
 - rhvoice-rest тут не доступен за пределами контейнера. Конечно, лучше использовать для него отдельный образ: mdmTerminal 2 + [rhvoice-rest](https://github.com/Aculeasis/rhvoice-rest)
 - mdmTerminal 2 имеет больше настроек чем оригинальный mdmPiTerminal, не все из них доступны через MDM VoiceAssistant - редактируйте settings.ini
+- TTS кэш хранится внутри контейнера (/opt/mdmterminal2/tts_cache).
 
 Ссылки
 ====
