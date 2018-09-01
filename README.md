@@ -12,6 +12,11 @@ mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal
 
 Пример, все сразу: `docker run -d -p 7999:7999 --device /dev/snd -e HOST_REAL_IP="192.168.2.102" -e ASOUND="h3" -e RHVOICE="http://192.168.2.101:8080" aculeasis/mdmt2:arm64v8`
 
+### Автозапуск
+Включить автозапуск демона `systemctl enable docker.service`
+
+По-умолчанию контейнеры не запускаются автоматически, например после ребута. Самый простой вариант добавить к `docker run` `--restart unless-stopped` или обновить существующий контейнер `docker update --restart unless-stopped <container name>`.
+
 ### VOLUME
 При запуске хосту будет доступен /opt/cfg контейнера со следующими файлами:
 - settings.ini - Настройки mdmTerminal 2. Создается вместе с контейнером
