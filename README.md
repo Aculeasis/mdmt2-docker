@@ -15,7 +15,7 @@ mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal
 ### Автозапуск
 Включить автозапуск демона `systemctl enable docker.service`
 
-По-умолчанию контейнеры не запускаются автоматически, например после ребута. Самый простой вариант добавить к `docker run` `--restart unless-stopped` или обновить существующий контейнер `docker update --restart unless-stopped <container name>`.
+По умолчанию контейнеры не запускаются автоматически, например после ребута. Самый простой вариант добавить к `docker run` `--restart unless-stopped` или обновить существующий контейнер `docker update --restart unless-stopped <container name>`.
 
 ### VOLUME
 При запуске хосту будет доступен /opt/cfg контейнера со следующими файлами:
