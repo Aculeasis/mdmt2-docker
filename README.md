@@ -17,15 +17,6 @@ mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal
 
 По умолчанию контейнеры не запускаются автоматически, например после ребута. Самый простой вариант добавить к `docker run` `--restart unless-stopped` или обновить существующий контейнер `docker update --restart unless-stopped <container name>`.
 
-### VOLUME
-При запуске хосту будет доступен /opt/cfg контейнера со следующими файлами:
-- settings.ini - Настройки mdmTerminal 2. Создается вместе с контейнером
-- RHVoice.conf - Настройки RHVoice, для образов с rhvoice-rest
-- asound.conf - Настройки ALSA
-- mdmterminal.log - Логи терминала
-
-См. `docker volume`
-
 Образы mdmTerminal 2
 ====
 Для aarch64:
@@ -54,7 +45,7 @@ mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal
 - Для работы с аудио контейнеру пробрасывается /dev/snd. Вероятно вы не сможете запустить несколько контейнеров\терминалов - snowboy постоянно использует микрофон
 - rhvoice-rest тут не доступен за пределами контейнера. Конечно, лучше использовать для него отдельный образ: mdmTerminal 2 + [rhvoice-rest](https://github.com/Aculeasis/rhvoice-rest)
 - mdmTerminal 2 имеет больше настроек чем оригинальный mdmPiTerminal, не все из них доступны через MDM VoiceAssistant - редактируйте settings.ini
-- TTS кэш хранится внутри контейнера (/opt/mdmterminal2/tts_cache).
+- Чтобы не терять данные при обновленях, нужно вынести на хост (через -v): `/opt/mdmterminal2/tts_cache`, `/opt/mdmterminal2/resources/models` и `/opt/cfg`
 
 Ссылки
 ====

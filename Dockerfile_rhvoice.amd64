@@ -48,6 +48,4 @@ ADD asound.conf.h3 /opt/cfg/asound.conf.h3
 
 EXPOSE 7999/tcp
 
-VOLUME ["/opt/cfg"]
-
 ENTRYPOINT ["/bin/bash", "/opt/entrypoint.sh"]
