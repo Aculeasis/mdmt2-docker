@@ -22,6 +22,8 @@ RUN apt-get update -y && \
     cd / && rm -rf /opt/term opt/sb && \
     mkdir /opt/cfg && \
     touch /opt/cfg/asound.conf && ln -s /opt/cfg/asound.conf /etc/asound.conf && \
+    touch /opt/cfg/settings.ini && ln -s /opt/cfg/settings.ini /opt/mdmterminal2/settings.ini && \
+    touch /opt/cfg/first_run && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) $REMOVE_ME && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
