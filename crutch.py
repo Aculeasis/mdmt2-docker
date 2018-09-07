@@ -3,7 +3,6 @@
 import configparser
 import os
 import subprocess
-import sys
 from shutil import copyfile
 
 """
@@ -23,10 +22,6 @@ def sound_fix(name):
 
 
 settings = os.path.join(os.path.join('/opt', 'cfg'), 'settings.ini')
-if os.path.isfile(settings):
-    sys.exit(0)
-
-settings_ln = os.path.join(os.path.join('/opt', 'mdmterminal2'), 'settings.ini')
 
 call = subprocess.run(['ip', 'route', 'show'], stdout=subprocess.PIPE)
 host_ip = ''
@@ -48,7 +43,6 @@ if 'HOST_REAL_IP' in os.environ:
 
 with open(settings, 'w') as f:
     config.write(f)
-os.symlink(settings, settings_ln)
 
 if 'ASOUND' in os.environ:
     sound_fix(os.environ['ASOUND'])
