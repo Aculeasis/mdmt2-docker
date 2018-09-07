@@ -13,11 +13,10 @@ cleanup() {
     echo "stop"
     exit 0
 }
-if [ -f /opt/cfg/first_run ]; then
-    if [ -f /opt/mdmterminal2/crutch.py ]; then
-        python3 -u /opt/mdmterminal2/crutch.py
-    fi
-    rm /opt/cfg/first_run
+
+if [ -f /opt/mdmterminal2/crutch.py ]; then
+    python3 /opt/mdmterminal2/crutch.py
+    rm /opt/mdmterminal2/crutch.py
 fi
 
 if [ -f /opt/rhvoice-rest.py ]; then
@@ -25,7 +24,7 @@ if [ -f /opt/rhvoice-rest.py ]; then
 fi
 
 if [ -f /opt/mdmterminal2/main.py ]; then
-    python3 -u /opt/mdmterminal2/main.py &
+    python3 /opt/mdmterminal2/main.py &
 fi
 
 wait
