@@ -21,14 +21,21 @@ def sound_fix(name):
         copyfile(src, dst)
 
 
+def get_host_ip():
+    if 'HOST_INTERNAL_IP' in os.environ:
+        return os.environ['HOST_INTERNAL_IP']
+    # docker>=18.03 https://docs.docker.com/docker-for-windows/networking/#use-cases-and-workarounds
+    # ip = 'host.docker.internal'
+    ip = '172.17.0.1'
+    call = subprocess.run(['ip', 'route', 'show'], stdout=subprocess.PIPE)
+    for line in call.stdout.decode().split('\n'):
+        if line.startswith('default'):
+            ip = line.split(' ')[2]
+    return ip
+
+
+host_ip = get_host_ip()
 settings = os.path.join(os.path.join('/opt', 'cfg'), 'settings.ini')
-
-call = subprocess.run(['ip', 'route', 'show'], stdout=subprocess.PIPE)
-host_ip = ''
-for line in call.stdout.decode().split('\n'):
-    if line.startswith('default'):
-        host_ip = line.split(' ')[2]
-
 rhvoice_here = os.path.isfile(os.path.join('/opt', 'rhvoice-rest.py')) or 'RHVOICE' in os.environ
 rhvoice = os.environ.get('RHVOICE', 'http://127.0.0.1:8080') if rhvoice_here else 'http://{}:8080'.format(host_ip)
 config = configparser.ConfigParser()
