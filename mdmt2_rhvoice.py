@@ -22,7 +22,8 @@ CFG = {
         'cfg': '/opt/cfg'
     },
     'e': {'HOST_REAL_IP': LAN_IP},
-    'any': [['--device', ' ', '/dev/snd'], ],
 }
+if ds.OS == 'linux':
+    CFG['any'] = [['--device', ' ', '/dev/snd'], ]
 
 ds.DockerStarter(CFG)
