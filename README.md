@@ -4,6 +4,17 @@ mdmT 2 docker
 
 mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal), голосового терминала для MajorDoMo. Он полностью совместим с [MDM VoiceAssistant](https://github.com/lanket/mdmPiTerminalModule)
 
+Быстрый старт
+====
+Запуск\обновление из хаба:
+
+-  mdmTerminal 2: `./mdmt2.py --upgrade`
+-  mdmTerminal 2 + rhvoice-rest: `./mdmt2_rhvoice.py --upgrade`
+
+Полное описание [тут](https://github.com/Aculeasis/docker-starter)
+
+PS: Т.к. готовых образов для armv7l нет их можно только собрать добавив ключь `-b`
+
 ### Переменные среды
 Новый контейнер можно запустить со следующими переменными (через -e):
 - **HOST_REAL_IP**. Сообщает контейнеру локальный ip хоста, сам он его узнать не может. Этот ip будет проговаривать терминал до настройки, больше он ни на что не влияет. Если не задать будет что-то вроде 172.17.0.2
