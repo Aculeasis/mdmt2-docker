@@ -22,8 +22,6 @@ RUN apt-get update -y && \
     cd /opt/sb/swig/Python3 && make && cp /opt/sb/swig/Python3/_snowboydetect.so /opt/mdmterminal2/lib/ && \
     cd / && rm -rf /opt/term opt/sb && \
     mkdir /opt/cfg && \
-    touch /opt/cfg/asound.conf && ln -s /opt/cfg/asound.conf /etc/asound.conf && \
-    touch /opt/cfg/settings.ini && ln -s /opt/cfg/settings.ini /opt/mdmterminal2/settings.ini && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) $REMOVE_ME && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
@@ -36,7 +34,7 @@ ENV LANGUAGE ru_RU.UTF-8
 
 ADD entrypoint.sh /opt/entrypoint.sh
 ADD crutch.py /opt/mdmterminal2/crutch.py
-ADD asound.conf.h3 /opt/cfg/asound.conf.h3
+ADD asound.conf.h3 /opt/asound.conf.h3
 
 EXPOSE 7999/tcp
 
