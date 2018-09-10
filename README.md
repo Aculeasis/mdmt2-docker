@@ -1,5 +1,7 @@
 mdmT 2 docker
 ====
+[![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/mdmt2.svg?label=mdmt2)](https://hub.docker.com/r/aculeasis/mdmt2/) [![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/mdmt2_rhvoice.svg?label=mdmt2_rhvoice)](https://hub.docker.com/r/aculeasis/mdmt2_rhvoice/)
+
 Готовые образы и докерфайлы для [mdmTerminal 2](https://github.com/Aculeasis/mdmTerminal2)
 
 mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal), голосового терминала для MajorDoMo. Он полностью совместим с [MDM VoiceAssistant](https://github.com/lanket/mdmPiTerminalModule)
@@ -12,8 +14,6 @@ mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal
 -  mdmTerminal 2 + rhvoice-rest: `./mdmt2_rhvoice.py --upgrade`
 
 Полное описание [тут](https://github.com/Aculeasis/docker-starter)
-
-PS: Т.к. готовых образов для armv7l нет их можно только собрать добавив ключь `-b`
 
 ### Переменные окружения
 Новый контейнер можно запустить со следующими переменными (через -e):
@@ -31,29 +31,19 @@ PS: Т.к. готовых образов для armv7l нет их можно т
 
 Образы mdmTerminal 2
 ====
-Для aarch64:
-
-`docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:arm64v8`
-
-Для x86_64
-
-`docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:amd64`
-
+- aarch64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:arm64v8`
+- armv7l `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:arm32v7`
+- x86_64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:amd64`
 
 Образы mdmTerminal 2 + rhvoice-rest
 ====
-Для aarch64:
-
-`docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:arm64v8`
-
-Для x86_64
-
-`docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:amd64`
+- aarch64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:arm64v8`
+- armv7l `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:arm32v7`
+- x86_64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:amd64`
 
 Примечания
 ====
 - В образах нет mpd, его нужно установить на хосте `sudo apt install mpd`
-- Образы для armv7l отсутствуют, их можно собрать самостоятельно из *.arm32v7 файлов.
 - Для работы с аудио контейнеру пробрасывается /dev/snd. Вероятно вы не сможете запустить несколько контейнеров\терминалов - snowboy постоянно использует микрофон
 - rhvoice-rest тут не доступен за пределами контейнера. Конечно, лучше использовать для него отдельный образ: mdmTerminal 2 + [rhvoice-rest](https://github.com/Aculeasis/rhvoice-rest)
 - mdmTerminal 2 имеет больше настроек чем оригинальный mdmPiTerminal, не все из них доступны через MDM VoiceAssistant - редактируйте settings.ini
