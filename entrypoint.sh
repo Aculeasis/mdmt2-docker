@@ -14,18 +14,24 @@ cleanup() {
     exit 0
 }
 
-if [ ! -f /opt/cfg/configured ]; then
-    touch /opt/cfg/asound.conf
-    ln -s /opt/cfg/asound.conf /etc/asound.conf
-
-    touch /opt/cfg/settings.ini
-    ln -s /opt/cfg/settings.ini /opt/mdmterminal2/settings.ini
-
-    if [ -f /usr/local/etc/RHVoice/RHVoice.conf ] && [ ! -L /usr/local/etc/RHVoice/RHVoice.conf ]; then
+if [ -f /usr/local/etc/RHVoice/RHVoice.conf ] && [ ! -L /usr/local/etc/RHVoice/RHVoice.conf ]; then
+    if [ ! -f /opt/cfg/RHVoice.conf ]; then
         mv /usr/local/etc/RHVoice/RHVoice.conf /opt/cfg/RHVoice.conf
-        ln -s /opt/cfg/RHVoice.conf /usr/local/etc/RHVoice/RHVoice.conf
     fi
+    ln -fs /opt/cfg/RHVoice.conf /usr/local/etc/RHVoice/RHVoice.conf
+fi
 
+if [ ! -L /etc/asound.conf ]; then
+    touch /opt/cfg/asound.conf
+    ln -fs /opt/cfg/asound.conf /etc/asound.conf
+fi
+
+if [ ! -L /opt/mdmterminal2/settings.ini ]; then
+    touch /opt/cfg/settings.ini
+    ln -fs /opt/cfg/settings.ini /opt/mdmterminal2/settings.ini
+fi
+
+if [ ! -f /opt/cfg/configured ]; then
     if [ -f /opt/asound.conf.h3 ]; then
         mv /opt/asound.conf.h3 /opt/cfg/asound.conf.h3
     fi
