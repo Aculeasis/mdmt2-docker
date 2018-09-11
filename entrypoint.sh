@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Setting trap PID $$"
+echo 'Setting trap PID $$'
 trap cleanup INT TERM
 
 cleanup() {
@@ -8,9 +8,9 @@ cleanup() {
     MAIN="$(pgrep 'python' -a | grep 'main.py' | awk '{print $1}')"
     kill -TERM "$MAIN"
     wait "$MAIN"
-    pgrep 'python' | xargs kill -TERM
+    pgrep 'python' | xargs -r kill -TERM
     wait
-    echo "stop"
+    echo 'stop'
     exit 0
 }
 
