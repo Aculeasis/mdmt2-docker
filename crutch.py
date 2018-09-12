@@ -41,10 +41,10 @@ rhvoice = os.environ.get('RHVOICE', 'http://127.0.0.1:8080') if rhvoice_here els
 config = configparser.ConfigParser()
 config['mpd'] = {'ip': host_ip}
 config['log'] = {'file_lvl': 'info', 'print_lvl': 'crit', 'file': '/opt/cfg/mdmterminal.log'}
-config['rhvoice'] = {'server': rhvoice}
+config['rhvoice-rest'] = {'server': rhvoice}
 config.add_section('Settings')
-config['cache'] = {'tts_priority': 'rhvoice' if rhvoice_here else 'yandex'}
-config.set('Settings', 'providertts', 'rhvoice' if rhvoice_here else 'google')
+config['cache'] = {'tts_priority': 'rhvoice-rest' if rhvoice_here else 'yandex'}
+config.set('Settings', 'providertts', 'rhvoice-rest' if rhvoice_here else 'google')
 if 'HOST_REAL_IP' in os.environ:
     config.set('Settings', 'ip', os.environ['HOST_REAL_IP'])
 
