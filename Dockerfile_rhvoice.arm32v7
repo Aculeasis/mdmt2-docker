@@ -26,7 +26,8 @@ RUN apt-get update -y && \
     cp /opt/RHVoice-dictionary/*.txt /usr/local/etc/RHVoice/dicts/Russian/ && \
     cp -R /opt/RHVoice-dictionary/tools /opt/ && \
     git clone https://github.com/Aculeasis/rhvoice-rest.git /opt/rhv && \
-    cp /opt/rhv/app.py /opt/rhvoice-rest.py && \
+    cp /opt/rhv/app.py /opt/rhvoice-rest.py && mkdir /opt/rhvoice_proxy && \
+    cp /opt/rhv/rhvoice-rest/rhvoice_proxy/rhvoice*.py /opt/rhvoice_proxy/ && \
     mkdir /opt/cfg && \
     cd / && rm -rf /opt/RHVoice /opt/RHVoice-dictionary /opt/data /opt/term /opt/rhv /opt/sb && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) $REMOVE_ME && \
