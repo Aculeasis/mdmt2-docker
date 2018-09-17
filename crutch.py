@@ -43,7 +43,10 @@ config['mpd'] = {'ip': host_ip}
 config['log'] = {'file_lvl': 'info', 'print_lvl': 'crit', 'file': '/opt/cfg/mdmterminal.log'}
 config['rhvoice-rest'] = {'server': rhvoice}
 config.add_section('Settings')
-config['cache'] = {'tts_priority': 'rhvoice-rest' if rhvoice_here else 'yandex'}
+config['cache'] = {
+    'tts_priority': 'rhvoice-rest' if rhvoice_here else 'yandex',
+    'tts_size': 0 if rhvoice_here else 100
+}
 config.set('Settings', 'providertts', 'rhvoice-rest' if rhvoice_here else 'google')
 if 'HOST_REAL_IP' in os.environ:
     config.set('Settings', 'ip', os.environ['HOST_REAL_IP'])
