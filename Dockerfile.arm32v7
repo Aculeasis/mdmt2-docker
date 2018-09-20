@@ -1,11 +1,9 @@
 FROM arm32v7/ubuntu:bionic
 
-ARG RUNTIME_PACKAGES='alsa-utils curl flac iproute2 locales mpg123 python3 python3-pip python3-setuptools \
-libatlas-base-dev libpython3.6'
+ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 locales mpg123 python3 libpython3.6 libatlas3-base libexpat1'
 ARG BUILD_PACKAGES='git python3-dev libjack-jackd2-dev portaudio19-dev libxml2-dev libxslt-dev libffi-dev libssl-dev \
-build-essential swig sox'
-ARG REMOVE_ME="dpkg-dev libcc1-0 libdpkg-perl libportaudiocpp0"
-ARG PIP_PACKAGES='pyaudio aftership gTTS pafy urllib3 SpeechRecognition python-mpd2 wikipedia'
+build-essential swig sox libatlas-base-dev python3-pip python3-setuptools'
+ARG PIP_PACKAGES='pyaudio aftership gTTS pafy urllib3 SpeechRecognition python-mpd2 wikipedia beautifulsoup4'
 
 RUN apt-get update -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
@@ -19,13 +17,13 @@ RUN apt-get update -y && \
     rm /opt/mdmterminal2/lib/_snowboydetect.* && \
     git clone https://github.com/Kitt-AI/snowboy.git /opt/sb && cd /opt/sb && git checkout 3f5f944 && \
     cd /opt/sb/swig/Python3 && make && cp /opt/sb/swig/Python3/_snowboydetect.so /opt/mdmterminal2/lib/ && \
-    cd / && rm -rf /opt/term opt/sb && \
-    mkdir /opt/cfg && \
-    apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) $REMOVE_ME && \
+    cd / && mkdir /opt/cfg && \
+    apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp /usr/share/doc/* /usr/share/info/* /usr/lib/python3.6/test
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp /usr/share/doc/* /usr/share/info/* /usr/lib/python3.6/test \
+    /root/.cache/* /opt/term opt/sb
 
 ENV LC_ALL ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8
