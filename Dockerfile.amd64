@@ -3,7 +3,7 @@ FROM amd64/ubuntu:bionic
 ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 locales mpg123 python3 libpython3.6 libatlas3-base libexpat1'
 ARG BUILD_PACKAGES='git python3-dev libjack-jackd2-dev portaudio19-dev libxml2-dev libxslt-dev libffi-dev libssl-dev \
 build-essential swig sox libatlas-base-dev python3-pip python3-setuptools'
-ARG PIP_PACKAGES='pyaudio aftership gTTS pafy urllib3 SpeechRecognition python-mpd2 wikipedia beautifulsoup4'
+ARG PIP_PACKAGES='SpeechRecognition beautifulsoup4 gTTS pyaudio python-mpd2 requests urllib3 wikipedia'
 
 RUN apt-get update -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \

@@ -4,8 +4,7 @@ ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 lame libatlas3-base libexpat1 lib
 python3'
 ARG BUILD_PACKAGES='build-essential git libatlas-base-dev libffi-dev libjack-jackd2-dev libssl-dev libxml2-dev \
 libxslt-dev portaudio19-dev python3-dev python3-pip python3-setuptools scons sox swig'
-ARG PIP_PACKAGES='SpeechRecognition aftership beautifulsoup4 flask gTTS pafy pyaudio pymorphy2 python-mpd2 urllib3 \
-wikipedia'
+ARG PIP_PACKAGES='SpeechRecognition beautifulsoup4 flask gTTS pyaudio pymorphy2 python-mpd2 requests urllib3 wikipedia'
 
 RUN apt-get update -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
