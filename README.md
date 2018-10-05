@@ -1,10 +1,9 @@
-mdmT 2 docker
-====
+[mdmT 2 docker](https://github.com/Aculeasis/mdmt2-docker)
+===
+
 [![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/mdmt2.svg?label=mdmt2)](https://hub.docker.com/r/aculeasis/mdmt2/) [![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/mdmt2_rhvoice.svg?label=mdmt2_rhvoice)](https://hub.docker.com/r/aculeasis/mdmt2_rhvoice/)
 
 Готовые образы и докерфайлы для [mdmTerminal 2](https://github.com/Aculeasis/mdmTerminal2)
-
-mdmTerminal 2 - форк [mdmPiTerminal](https://github.com/devoff/mdmPiTerminal), голосового терминала для MajorDoMo. Он полностью совместим с [MDM VoiceAssistant](https://github.com/lanket/mdmPiTerminalModule)
 
 Быстрый старт
 ====
