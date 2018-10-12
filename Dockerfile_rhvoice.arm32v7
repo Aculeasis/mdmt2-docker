@@ -3,15 +3,16 @@ FROM arm32v7/ubuntu:bionic
 ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 lame libatlas3-base libexpat1 libpython3.6 locales mpg123 opus-tools \
 python3'
 ARG BUILD_PACKAGES='build-essential git libatlas-base-dev libffi-dev libjack-jackd2-dev libssl-dev libxml2-dev \
-libxslt-dev portaudio19-dev python3-dev python3-pip python3-setuptools scons sox swig'
+libxslt-dev portaudio19-dev python3-dev python3-pip python3-setuptools python3-wheel scons sox swig'
 ARG PIP_PACKAGES='SpeechRecognition beautifulsoup4 flask gTTS pyaudio pymorphy2 python-mpd2 requests urllib3 wikipedia \
-rhvoice-wrapper'
+rhvoice-wrapper rhvoice-wrapper-bin'
 
 RUN apt-get update -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
     apt-mark manual $(apt-mark showauto) && \
     apt-get -y install --no-install-recommends $BUILD_PACKAGES && \
     pip3 install $PIP_PACKAGES && \
+    echo "$(pip3 show rhvoice-wrapper-bin | grep Location | awk '{print $2}')/rhvoice_wrapper_bin/lib/" > /opt/LIBRARY_PATH && \
     cd /usr/share/locale/ && ls | grep -v 'ru\|en\|locale.alias' | xargs rm -rf && \
     locale-gen ru_RU.UTF-8 && \
     git clone https://github.com/Aculeasis/mdmTerminal2.git /opt/term && \
@@ -19,21 +20,19 @@ RUN apt-get update -y && \
     rm /opt/mdmterminal2/lib/_snowboydetect.* && \
     git clone https://github.com/Kitt-AI/snowboy.git /opt/sb && cd /opt/sb && git checkout 3f5f944 && \
     cd /opt/sb/swig/Python3 && make && cp /opt/sb/swig/Python3/_snowboydetect.so /opt/mdmterminal2/lib/ && \
-    git clone https://github.com/Olga-Yakovleva/RHVoice.git /opt/RHVoice && \
-    cd /opt/RHVoice && git checkout dc36179 && scons && scons install && ldconfig && \
     git clone https://github.com/vantu5z/RHVoice-dictionary.git /opt/RHVoice-dictionary && \
     mkdir -p /usr/local/etc/RHVoice/dicts/Russian/ && \
     cp /opt/RHVoice-dictionary/*.txt /usr/local/etc/RHVoice/dicts/Russian/ && \
     cp -R /opt/RHVoice-dictionary/tools /opt/ && \
     git clone https://github.com/Aculeasis/rhvoice-rest.git /opt/rhv && \
-    cp /opt/rhv/app.py /opt/rhvoice-rest.py && mkdir /opt/rhvoice_proxy && \
+    cp /opt/rhv/app.py /opt/rhvoice-rest.py && \
     mkdir /opt/cfg && cd / && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp /usr/share/doc/* /usr/share/info/* /usr/lib/python3.6/test \
-    /root/.cache/* /opt/RHVoice /opt/RHVoice-dictionary /opt/data /opt/term /opt/rhv /opt/sb
+    /root/.cache/* /opt/RHVoice-dictionary /opt/data /opt/term /opt/rhv /opt/sb
 
 ENV LC_ALL ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8

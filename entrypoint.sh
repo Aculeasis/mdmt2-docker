@@ -44,6 +44,11 @@ if [ ! -f /opt/cfg/configured ]; then
 fi
 
 if [ -f /opt/rhvoice-rest.py ]; then
+    if [ -f /opt/LIBRARY_PATH ]; then
+        LIBRARY_PATH=$(head -1 /opt/LIBRARY_PATH)
+        echo "Set LD_LIBRARY_PATH=$LIBRARY_PATH"
+        export LD_LIBRARY_PATH="$LIBRARY_PATH"
+    fi
     python3 /opt/rhvoice-rest.py & sleep 1
 fi
 
