@@ -16,23 +16,21 @@ RUN apt-get update -y && \
     cd /usr/share/locale/ && ls | grep -v 'ru\|en\|locale.alias' | xargs rm -rf && \
     locale-gen ru_RU.UTF-8 && \
     git clone https://github.com/Aculeasis/mdmTerminal2.git /opt/term && \
+    /opt/term/scripts/snowboy_build.sh && \
     cp -R /opt/term/src/ /opt/mdmterminal2/ && \
-    rm /opt/mdmterminal2/lib/_snowboydetect.* && \
-    git clone https://github.com/Kitt-AI/snowboy.git /opt/sb && cd /opt/sb && git checkout 3f5f944 && \
-    cd /opt/sb/swig/Python3 && make && cp /opt/sb/swig/Python3/_snowboydetect.so /opt/mdmterminal2/lib/ && \
     git clone https://github.com/vantu5z/RHVoice-dictionary.git /opt/RHVoice-dictionary && \
     mkdir -p /usr/local/etc/RHVoice/dicts/Russian/ && \
     cp /opt/RHVoice-dictionary/*.txt /usr/local/etc/RHVoice/dicts/Russian/ && \
     cp -R /opt/RHVoice-dictionary/tools /opt/ && \
     git clone https://github.com/Aculeasis/rhvoice-rest.git /opt/rhv && \
     cp /opt/rhv/app.py /opt/rhvoice-rest.py && \
-    mkdir /opt/cfg && cd / && \
+    mkdir /opt/cfg && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp /usr/share/doc/* /usr/share/info/* /usr/lib/python3.6/test \
-    /root/.cache/* /opt/RHVoice-dictionary /opt/data /opt/term /opt/rhv /opt/sb
+    /root/.cache/* /opt/RHVoice-dictionary /opt/data /opt/term /opt/rhv
 
 ENV LC_ALL ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8

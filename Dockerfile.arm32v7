@@ -1,6 +1,6 @@
 FROM arm32v7/ubuntu:bionic
 
-ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 locales mpg123 python3 libpython3.6 libatlas3-base libexpat1'
+ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 locales mpg123 python3 opus-tools libpython3.6 libatlas3-base libexpat1'
 ARG BUILD_PACKAGES='git python3-dev libjack-jackd2-dev portaudio19-dev libxml2-dev libxslt-dev libffi-dev libssl-dev \
 build-essential swig sox libatlas-base-dev python3-pip python3-setuptools'
 ARG PIP_PACKAGES='SpeechRecognition beautifulsoup4 gTTS pyaudio python-mpd2 requests[socks] urllib3 wikipedia'
@@ -13,17 +13,15 @@ RUN apt-get update -y && \
     cd /usr/share/locale/ && ls | grep -v 'ru\|en\|locale.alias' | xargs rm -rf && \
     locale-gen ru_RU.UTF-8 && \
     git clone https://github.com/Aculeasis/mdmTerminal2.git /opt/term && \
+    /opt/term/scripts/snowboy_build.sh && \
     cp -R /opt/term/src/ /opt/mdmterminal2/ && \
-    rm /opt/mdmterminal2/lib/_snowboydetect.* && \
-    git clone https://github.com/Kitt-AI/snowboy.git /opt/sb && cd /opt/sb && git checkout 3f5f944 && \
-    cd /opt/sb/swig/Python3 && make && cp /opt/sb/swig/Python3/_snowboydetect.so /opt/mdmterminal2/lib/ && \
-    cd / && mkdir /opt/cfg && \
+    mkdir /opt/cfg && \
     apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && \
     apt-get autoremove -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp /usr/share/doc/* /usr/share/info/* /usr/lib/python3.6/test \
-    /root/.cache/* /opt/term opt/sb
+    /root/.cache/* /opt/term
 
 ENV LC_ALL ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8
