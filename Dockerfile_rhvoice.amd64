@@ -1,11 +1,10 @@
 FROM amd64/ubuntu:bionic
 
 ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 lame libatlas3-base libexpat1 libpython3.6 locales mpg123 opus-tools \
-python3'
-ARG BUILD_PACKAGES='build-essential git libatlas-base-dev libffi-dev libjack-jackd2-dev libssl-dev libxml2-dev \
-libxslt-dev portaudio19-dev python3-dev python3-pip python3-setuptools python3-wheel scons sox swig'
-ARG PIP_PACKAGES='SpeechRecognition beautifulsoup4 flask gTTS pyaudio pymorphy2 python-mpd2 requests[socks] urllib3 \
-wikipedia rhvoice-wrapper rhvoice-wrapper-bin'
+python3 python3-setuptools'
+ARG BUILD_PACKAGES='build-essential git libatlas-base-dev libffi-dev libjack-jackd2-dev libssl-dev libtool libxml2-dev \
+libxslt-dev portaudio19-dev python3-dev python3-pip python3-wheel scons sox swig'
+ARG PIP_PACKAGES='flask pymorphy2 rhvoice-wrapper rhvoice-wrapper-bin'
 
 RUN apt-get update -y && \
     apt-get -y install --no-install-recommends $RUNTIME_PACKAGES && \
@@ -16,6 +15,7 @@ RUN apt-get update -y && \
     cd /usr/share/locale/ && ls | grep -v 'ru\|en\|locale.alias' | xargs rm -rf && \
     locale-gen ru_RU.UTF-8 && \
     git clone https://github.com/Aculeasis/mdmTerminal2.git /opt/term && \
+    pip3 install -r /opt/term/Requirements/pip-requirements.txt && \
     /opt/term/scripts/snowboy_build.sh && \
     cp -R /opt/term/src/ /opt/mdmterminal2/ && \
     git clone https://github.com/vantu5z/RHVoice-dictionary.git /opt/RHVoice-dictionary && \

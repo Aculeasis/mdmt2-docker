@@ -47,7 +47,6 @@
 - rhvoice-rest тут не доступен за пределами контейнера. Конечно, лучше использовать для него отдельный образ: mdmTerminal 2 + [rhvoice-rest](https://github.com/Aculeasis/rhvoice-rest)
 - mdmTerminal 2 имеет больше настроек чем оригинальный mdmPiTerminal, не все из них доступны через MDM VoiceAssistant - редактируйте settings.ini
 - Чтобы не терять данные при обновленях, нужно вынести на хост (через -v): `/opt/mdmterminal2/tts_cache`, `/opt/mdmterminal2/resources/models` и `/opt/cfg`
-- `Dockerfile_rhvoice.arm64v8` использует заранее собранный `rhvoice-wrapper-bin` (зеро часто не хватает памяти на сборку)
 
 Ссылки
 ====
