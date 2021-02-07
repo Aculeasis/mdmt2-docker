@@ -19,9 +19,9 @@ RUN apt-get update -y && \
     /opt/term/scripts/snowboy_build.sh && \
     cp -R /opt/term/src/ /opt/mdmterminal2/ && \
     git clone https://github.com/vantu5z/RHVoice-dictionary.git /opt/RHVoice-dictionary && \
-    mkdir -p /usr/local/etc/RHVoice/dicts/Russian/ && \
-    cp /opt/RHVoice-dictionary/*.txt /usr/local/etc/RHVoice/dicts/Russian/ && \
-    cp -R /opt/RHVoice-dictionary/tools /opt/ && \
+    mkdir -p /usr/local/etc/RHVoice/ && \
+    cp -R /opt/RHVoice-dictionary/dicts /usr/local/etc/RHVoice/dicts && \
+    cp -R /opt/RHVoice-dictionary/tools/preprocessing /opt/rhvoice_tools && \
     git clone https://github.com/Aculeasis/rhvoice-rest.git /opt/rhv && \
     cp /opt/rhv/app.py /opt/rhvoice-rest.py && \
     mkdir /opt/cfg && \
