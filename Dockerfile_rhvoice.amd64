@@ -1,5 +1,6 @@
-FROM amd64/ubuntu:bionic
+FROM amd64/ubuntu:20.04
 
+ARG DEBIAN_FRONTEND=noninteractive
 ARG RUNTIME_PACKAGES='alsa-utils flac iproute2 lame libatlas3-base libexpat1 libpython3.6 locales mpg123 opus-tools \
 python3 python3-setuptools zlib1g'
 ARG BUILD_PACKAGES='build-essential git libatlas-base-dev libffi-dev libjack-jackd2-dev libssl-dev libtool libxml2-dev \
@@ -11,6 +12,9 @@ RUN apt-get update -y && \
     apt-mark manual $(apt-mark showauto) && \
     apt-get -y install --no-install-recommends $BUILD_PACKAGES && \
     pip3 install $PIP_PACKAGES && \
+    wget -q https://raw.githubusercontent.com/Aculeasis/ff/main/rhv_bin.py -O rhv_bin.py && \
+    pip3 install $(python3 rhv_bin.py 0 0 data) && pip3 install $(python3 rhv_bin.py linux amd64) && \
+    rm rhv_bin.py && \
     echo "$(pip3 show rhvoice-wrapper-bin | grep Location | awk '{print $2}')/rhvoice_wrapper_bin/lib/" > /opt/LIBRARY_PATH && \
     cd /usr/share/locale/ && ls | grep -v 'ru\|en\|locale.alias' | xargs rm -rf && \
     locale-gen ru_RU.UTF-8 && \
