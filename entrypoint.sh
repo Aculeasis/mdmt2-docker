@@ -14,13 +14,6 @@ cleanup() {
     exit 0
 }
 
-if [ -f /usr/local/etc/RHVoice/RHVoice.conf ] && [ ! -L /usr/local/etc/RHVoice/RHVoice.conf ]; then
-    if [ ! -f /opt/cfg/RHVoice.conf ]; then
-        mv /usr/local/etc/RHVoice/RHVoice.conf /opt/cfg/RHVoice.conf
-    fi
-    ln -fs /opt/cfg/RHVoice.conf /usr/local/etc/RHVoice/RHVoice.conf
-fi
-
 if [ ! -L /etc/asound.conf ]; then
     touch /opt/cfg/asound.conf
     ln -fs /opt/cfg/asound.conf /etc/asound.conf
@@ -41,15 +34,6 @@ if [ ! -f /opt/cfg/configured ]; then
     fi
 
     touch /opt/cfg/configured
-fi
-
-if [ -f /opt/rhvoice-rest.py ]; then
-    if [ -f /opt/LIBRARY_PATH ]; then
-        LIBRARY_PATH=$(head -1 /opt/LIBRARY_PATH)
-        echo "Set LD_LIBRARY_PATH=$LIBRARY_PATH"
-        export LD_LIBRARY_PATH="$LIBRARY_PATH"
-    fi
-    python3 /opt/rhvoice-rest.py & sleep 1
 fi
 
 if [ -f /opt/mdmterminal2/main.py ]; then

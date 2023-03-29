@@ -1,50 +1,36 @@
 [mdmT 2 docker](https://github.com/Aculeasis/mdmt2-docker)
 ===
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/mdmt2.svg?label=mdmt2)](https://hub.docker.com/r/aculeasis/mdmt2/) [![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/mdmt2_rhvoice.svg?label=mdmt2_rhvoice)](https://hub.docker.com/r/aculeasis/mdmt2_rhvoice/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/aculeasis/mdmt2.svg?label=mdmt2)](https://hub.docker.com/r/aculeasis/mdmt2/)
 
-Готовые образы и докерфайлы для [mdmTerminal 2](https://github.com/Aculeasis/mdmTerminal2)
+Готовые docker-образы и докерфайлы для [mdmTerminal 2](https://github.com/Aculeasis/mdmTerminal2)
 
-Быстрый старт
-====
-Запуск\обновление из хаба:
+```bash
+docker run -d \
+  --name=mdmt2 \
+  --device /dev/snd \
+  -p 7999:7999 \
+  -v /path/to/tts_cache:/opt/mdmterminal2/tts_cache `#optional` \
+  -v /path/to/models:/opt/mdmterminal2/resources/models `#optional` \
+  -v /path/to/cfg:/opt/cfg `#optional` \
+  --restart unless-stopped \
+  aculeasis/mdmt2:latest
+```
+Поддерживаемые архитектуры:
+| Architecture | Available | Tag |
+| :----: | :----: | ---- |
+| x86-64 | ✅ | amd64 |
+| arm64 | ✅ | arm64v8 |
+| armhf | ✅ | arm32v7 |
 
--  mdmTerminal 2: `./mdmt2.py --upgrade`
--  mdmTerminal 2 + rhvoice-rest: `./mdmt2_rhvoice.py --upgrade`
-
-Полное описание [тут](https://github.com/Aculeasis/docker-starter)
+Для автоматического обновления можно использовать [Watchtower](https://github.com/containrrr/watchtower).
 
 ### Переменные окружения
 Новый контейнер можно запустить со следующими переменными (через -e):
 - **HOST_REAL_IP**. Сообщает контейнеру локальный ip хоста, сам он его узнать не может. Этот ip будет проговаривать терминал до настройки, больше он ни на что не влияет. Если не задать будет что-то вроде `172.17.0.2`.
 - **ASOUND**. Использует преднастроенный asound.conf, доступно только `-e ASOUND="h3"`. Может помочь если rhvoice-rest заикается.
-- **RHVOICE**. Задает полный адрес сервера rhvoice-rest и включает его как TTS. Можно установить и для образов с rhvoice-rest, но не нужно.
+- **RHVOICE**. Задает полный адрес сервера rhvoice-rest и включает его как TTS.
 - **HOST_INTERNAL_IP**. Сообщает контейнеру адрес хоста в сети докера. В линуксе должен определить сам, в винде можно указать `host.docker.internal`, если версия докера 18.03 и выше.
-
-Пример, все сразу: `docker run -d -p 7999:7999 --device /dev/snd -e HOST_REAL_IP="192.168.2.102" -e ASOUND="h3" -e RHVOICE="http://192.168.2.101:8080" aculeasis/mdmt2:arm64v8`
-
-### Автозапуск
-Включить автозапуск демона `systemctl enable docker.service`.
-
-По умолчанию контейнеры не запускаются автоматически, например после ребута. Самый простой вариант добавить к `docker run` `--restart unless-stopped` или обновить существующий контейнер `docker update --restart unless-stopped <container name>`.
-
-Образы mdmTerminal 2
-====
-- aarch64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:arm64v8`
-- armv7l `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:arm32v7`
-- x86_64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2:amd64`
-
-Образы mdmTerminal 2 + rhvoice-rest
-====
-- aarch64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:arm64v8`
-- armv7l `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:arm32v7`
-- x86_64 `docker run -d -p 7999:7999 --device /dev/snd aculeasis/mdmt2_rhvoice:amd64`
-
-Примечания
-====
-- В образах нет mpd, его нужно установить на хосте `sudo apt install mpd`.
-- rhvoice-rest в образе не доступен за пределами контейнера. Конечно, лучше использовать отдельный образ [rhvoice-rest](https://github.com/Aculeasis/rhvoice-rest).
-- Чтобы не терять данные при обновленях, нужно вынести на хост (через -v): `/opt/mdmterminal2/tts_cache`, `/opt/mdmterminal2/resources/models` и `/opt/cfg`.
 
 Ссылки
 ====
